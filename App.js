@@ -1,12 +1,18 @@
+// React & Native
 import React from 'react'
 import { View } from 'react-native';
-import HomePage from './pages/HomePage.js'
-import WorkoutPage from './pages/WorkoutPage.js'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-const Stack = createNativeStackNavigator();
+// Pages
+import HomePage from './pages/HomePage.js'
+import SigninPage from './pages/SigninPage.js'
+import RegisterPage from './pages/RegisterPage.js'
+import DashboardPage from './pages/DashboardPage.js'
+import WorkoutPage from './pages/WorkoutPage.js'
+import EditWorkoutPage from './pages/EditWorkoutPage.js'
 
+const Stack = createNativeStackNavigator();
 
 export default function App() {
 
@@ -14,7 +20,11 @@ export default function App() {
 		<NavigationContainer>
 			<Stack.Navigator>
 				<Stack.Screen name="Home" component={HomePage} />
+				<Stack.Screen name="Signin" component={SigninPage} />
+				<Stack.Screen name="Register" component={RegisterPage} />
+				<Stack.Screen name="Dashboard" component={DashboardPage} />
 				<Stack.Screen name="Workout" component={WorkoutPage} />
+				<Stack.Screen name="EditWorkout" component={EditWorkoutPage} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
