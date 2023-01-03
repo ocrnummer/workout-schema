@@ -14,8 +14,7 @@ import EditWorkoutPage from './pages/EditWorkoutPage.js'
 
 const Stack = createNativeStackNavigator();
 
-export default function App() {
-
+const AppNavigation = () => {
 	return (
 		<NavigationContainer>
 			<Stack.Navigator>
@@ -27,6 +26,13 @@ export default function App() {
 				<Stack.Screen name="EditWorkout" component={EditWorkoutPage} />
 			</Stack.Navigator>
 		</NavigationContainer>
+	)
+}
+
+export default function App() {
+
+	return (
+		<AppNavigation />
 	);
 }
 
