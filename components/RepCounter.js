@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 
-const RepCounter = ({ reps }) => {
+const RepCounter = ({ reps, handleSuccess }) => {
 	const [counter, setCounter] = useState(reps)
 	const [active, setActive] = useState(false)
+	const [success, setSuccess] = useState(false)
 
 	const handleCount = () => {
 		if (active) {
@@ -11,22 +12,33 @@ const RepCounter = ({ reps }) => {
 				setCounter(reps)
 				setActive(false)
 			} else {
-				setCounter(count =>  count - 1)
+				setCounter(count => count - 1)
 			}
 		} else {
 			setActive(true)
 		}
+
+		if (!active && counter === reps) {
+			handleSuccess(true)
+		} else {
+			handleSuccess(false)
+		}
 	}
+
+	// useEffect(() => {
+	// 	console.log('här')
+	// 	if (success) {
+	// 		handleSuccess(true)
+	// 	}
+	// }, [setSuccess])
 
 	return (
 		<View>
-			<TouchableOpacity
-				onPress={handleCount}
-			>
-				<View 
+			<TouchableOpacity onPress={handleCount}>
+				<View
 					style={active ? styles.counter : [styles.counter, styles.counterZero]}
 				>
-					<Text style={active ? styles.text : [styles.text, styles.textZero]}>{ counter }</Text>
+					<Text style={active ? styles.text : [styles.text, styles.textZero]}>{counter}</Text>
 				</View>
 			</TouchableOpacity>
 		</View>
@@ -36,7 +48,7 @@ const RepCounter = ({ reps }) => {
 const styles = StyleSheet.create({
 	counter: {
 		backgroundColor: 'blue',
-		alignItems:'center',
+		alignItems: 'center',
 		justifyContent: 'center',
 		borderRadius: 20,
 		width: 40,

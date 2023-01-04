@@ -8,7 +8,7 @@ const useUserContext = () => {
 }
 
 const UserContextProvider = ({ children }) => {
-	const [User, setUser] = useState([])
+	const [user, setUser] = useState([])
 	const [schemaA, setSchemaA] = useState([])
 	const [schemaB, setSchemaB] = useState([])
 	const [schemaC, setSchemaC] = useState([])
