@@ -21,6 +21,12 @@ const HomePage = ({ navigation }) => {
 					navigation.navigate('Register')
 				}
 			/>
+			<Button
+				title="Workout"
+				onPress={() =>
+					navigation.navigate('Workout')
+				}
+			/>
 
 		</View>
 	)

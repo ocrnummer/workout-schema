@@ -1,8 +1,10 @@
 // React & Native
 import React from 'react'
-import { View } from 'react-native';
+//import { View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import AuthContextProvider from './contexts/AuthContext'
+import UserContextProvider from './contexts/UserContext'
 
 // Pages
 import HomePage from './pages/HomePage.js'
@@ -32,7 +34,11 @@ const AppNavigation = () => {
 export default function App() {
 
 	return (
-		<AppNavigation />
+		<AuthContextProvider>
+			<UserContextProvider>
+				<AppNavigation />
+			</UserContextProvider>
+		</AuthContextProvider>
 	);
 }
 

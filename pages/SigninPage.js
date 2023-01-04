@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
 import { useAuthContext } from "../contexts/AuthContext";
 
-
-
 const SigninPage = () => {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')

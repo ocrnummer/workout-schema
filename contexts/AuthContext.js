@@ -1,15 +1,15 @@
-import { createContext, useContext } from "react";
+import React, { createContext, useContext } from "react";
 import {
 	signInWithEmailAndPassword,
 	signOut
 } from "firebase/auth";
-import { auth, storage } from "../firebase";
+import { auth } from "../firebase";
 
-const AuthContect = createContext();
+const AuthContext = createContext()
 
 const useAuthContext = () => {
-	return useContext(AuthContect);
-};
+	return useContext(AuthContext)
+}
 
 const AuthContextProvider = ({ children }) => {
 
