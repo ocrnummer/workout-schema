@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native';
 
-const HomePage = ({ navigation }) => {
-	const [reps, setReps] = useState(5)
+const HomePage = ({ navigation }: any) => {
 
 	return (
 		<View style={styles.container}>

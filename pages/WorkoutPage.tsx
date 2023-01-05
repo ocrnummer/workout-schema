@@ -1,11 +1,9 @@
-// react
+// React
 import { useState, useEffect } from 'react'
 import { View, Text, Button, ScrollView } from 'react-native'
-
-// components & Pages
+// Components & Pages
 import RepCounter from '../components/RepCounter'
-
-// contexts & interfaces
+// Contexts & Interfaces
 import { useUserContext } from '../contexts/UserContext'
 import { ExerciseSet, UserExcerise, WorkoutSchema } from '../interfaces/UserSchemas'
 

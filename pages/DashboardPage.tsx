@@ -17,11 +17,9 @@ const DashboardPage = ({ navigation }: any) => {
 	)
 }
 
-// const styles = StyleSheet.create({
-// 	container {
+const styles = StyleSheet.create({
 
-// 	}
-// });
+});
 
 
 export default DashboardPage

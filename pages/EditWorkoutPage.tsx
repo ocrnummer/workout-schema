@@ -1,10 +1,7 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
-import RepCounter from '../components/RepCounter.js'
-
 
 const EditWorkoutPage = () => {
-
 
 	return (
 		<View>

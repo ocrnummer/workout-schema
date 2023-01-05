@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
 import { useAuthContext } from "../contexts/AuthContext";
 
-const SigninPage = () => {
+const SigninPage = ({ navigation }: any) => {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const { login } = useAuthContext()
@@ -27,7 +27,7 @@ const SigninPage = () => {
 		<View style={styles.container}>
 			<Text>Sign in</Text>
 
-			<View style={styles.inputContainer}>
+			<View>
 				<Text>Email</Text>
 				<TextInput
 					placeholder="Enter email"
@@ -40,7 +40,7 @@ const SigninPage = () => {
 				/>
 			</View>
 
-			<View style={styles.inputContainer}>
+			<View>
 				<Text>Password</Text>
 				<TextInput
 					placeholder="Password"

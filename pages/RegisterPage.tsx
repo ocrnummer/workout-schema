@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
 
 
-const RegisterPage = () => {
+const RegisterPage = ({ navigation }: any) => {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [repeatPassword, setRepeatPassword] = useState('')
@@ -11,7 +11,7 @@ const RegisterPage = () => {
 		<View style={styles.container}>
 			<Text>Register</Text>
 
-			<View style={styles.inputContainer}>
+			<View>
 				<Text>Email</Text>
 				<TextInput
 					placeholder="Email"
@@ -21,7 +21,7 @@ const RegisterPage = () => {
 				/>
 			</View>
 
-			<View style={styles.inputContainer}>
+			<View>
 				<Text>Password</Text>
 				<TextInput
 					placeholder="Password"
@@ -31,7 +31,7 @@ const RegisterPage = () => {
 				/>
 			</View>
 
-			<View style={styles.inputContainer}>
+			<View>
 				<Text>Repeat Password</Text>
 				<TextInput
 					placeholder="Password"

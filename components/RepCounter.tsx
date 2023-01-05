@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 
-const RepCounter = ({ reps, id, handleSuccess }) => {
+const RepCounter = ({ reps, id, handleSuccess }: any) => {
 	const [counter, setCounter] = useState(reps)
 	const [active, setActive] = useState(false)
 
@@ -11,7 +11,7 @@ const RepCounter = ({ reps, id, handleSuccess }) => {
 				setCounter(reps)
 				setActive(false)
 			} else {
-				setCounter(count => count - 1)
+				setCounter((count: any) => count - 1)
 			}
 		} else {
 			setActive(true)
@@ -27,9 +27,7 @@ const RepCounter = ({ reps, id, handleSuccess }) => {
 	return (
 		<View>
 			<TouchableOpacity onPress={handleCount}>
-				<View
-					style={active ? styles.counter : [styles.counter, styles.counterZero]}
-				>
+				<View style={active ? styles.counter : [styles.counter, styles.counterZero]}>
 					<Text style={active ? styles.text : [styles.text, styles.textZero]}>{counter}</Text>
 				</View>
 			</TouchableOpacity>

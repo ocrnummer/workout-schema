@@ -5,7 +5,6 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AuthContextProvider from './contexts/AuthContext'
 import UserContextProvider from './contexts/UserContext'
-
 // Pages
 import HomePage from './pages/HomePage'
 import SigninPage from './pages/SigninPage'

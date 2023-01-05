@@ -5,7 +5,7 @@ import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
 const EmailInput = () => {
 
 	return (
-		<View style={styles.inputContainer}>
+		<View>
 			<Text>Email</Text>
 			<TextInput
 				placeholder="Email"
