@@ -26,7 +26,6 @@ const HomePage = ({ navigation }: any) => {
 					navigation.navigate('Dashboard')
 				}
 			/>
-
 		</View>
 	)
 }

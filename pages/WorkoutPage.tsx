@@ -1,15 +1,20 @@
 // React
 import { useState, useEffect } from 'react'
 import { View, Text, Button, ScrollView } from 'react-native'
-// Components & Pages
+// Components
 import RepCounter from '../components/RepCounter'
-// Contexts & Interfaces
+// Contexts, Interfaces & Helpers
 import { useUserContext } from '../contexts/UserContext'
 import { ExerciseSet, UserExcerise, WorkoutSchema } from '../interfaces/UserSchemas'
+import { formatNameToTitle } from '../helpers/TitleConverter'
 
 const WorkoutPage = ({ navigation }: any) => {
 	const [schema, setSchema] = useState<WorkoutSchema>([])
-	const { schemaA, setSchemaA } = useUserContext()
+	const {
+		schemaA, setSchemaA,
+		schemaB, setSchemaB,
+		schemaC, setSchemaC,
+	} = useUserContext()
 
 	const handleFinishWorkout = (): void => {
 		schema.forEach((ex): void => {
@@ -44,12 +49,12 @@ const WorkoutPage = ({ navigation }: any) => {
 
 	return (
 		<ScrollView>
-			<Text>Workout!</Text>
+			<Text>Workout</Text>
 
 			{schema.map(ex => {
 				return (
 					<ScrollView key={ex.id as string}>
-						<Text>{ex.name} - {ex.weight} kg</Text>
+						<Text>{formatNameToTitle(ex.name)} - {ex.weight} kg</Text>
 						{ex.sets.map((set) => {
 							return (
 								<View key={set.id}>
