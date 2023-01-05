@@ -7,12 +7,12 @@ import AuthContextProvider from './contexts/AuthContext'
 import UserContextProvider from './contexts/UserContext'
 
 // Pages
-import HomePage from './pages/HomePage.js'
-import SigninPage from './pages/SigninPage.js'
-import RegisterPage from './pages/RegisterPage.js'
-import DashboardPage from './pages/DashboardPage.js'
-import WorkoutPage from './pages/WorkoutPage.js'
-import EditWorkoutPage from './pages/EditWorkoutPage.js'
+import HomePage from './pages/HomePage'
+import SigninPage from './pages/SigninPage'
+import RegisterPage from './pages/RegisterPage'
+import DashboardPage from './pages/DashboardPage'
+import WorkoutPage from './pages/WorkoutPage'
+import EditWorkoutPage from './pages/EditWorkoutPage'
 
 const Stack = createNativeStackNavigator();
 

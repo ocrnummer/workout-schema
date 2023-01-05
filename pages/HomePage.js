@@ -22,9 +22,9 @@ const HomePage = ({ navigation }) => {
 				}
 			/>
 			<Button
-				title="Workout"
+				title="Dashboard"
 				onPress={() =>
-					navigation.navigate('Workout')
+					navigation.navigate('Dashboard')
 				}
 			/>
 

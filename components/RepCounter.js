@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 
-const RepCounter = ({ reps, handleSuccess }) => {
+const RepCounter = ({ reps, id, handleSuccess }) => {
 	const [counter, setCounter] = useState(reps)
 	const [active, setActive] = useState(false)
-	const [success, setSuccess] = useState(false)
 
 	const handleCount = () => {
 		if (active) {
@@ -19,18 +18,11 @@ const RepCounter = ({ reps, handleSuccess }) => {
 		}
 
 		if (!active && counter === reps) {
-			handleSuccess(true)
+			handleSuccess([id, true])
 		} else {
-			handleSuccess(false)
+			handleSuccess([id, false])
 		}
 	}
-
-	// useEffect(() => {
-	// 	console.log('här')
-	// 	if (success) {
-	// 		handleSuccess(true)
-	// 	}
-	// }, [setSuccess])
 
 	return (
 		<View>
