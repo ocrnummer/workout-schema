@@ -1,6 +1,6 @@
 // React
 import { useState, useEffect } from 'react'
-import { View, Text, Button, ScrollView } from 'react-native'
+import { StyleSheet, View, Text, Button, ScrollView } from 'react-native'
 // Components
 import RepCounter from '../components/RepCounter'
 // Contexts, Interfaces & Helpers
@@ -50,22 +50,22 @@ const WorkoutPage = ({ navigation }: any) => {
 	return (
 		<ScrollView>
 			<Text>Workout</Text>
-
 			{schema.map(ex => {
 				return (
 					<ScrollView key={ex.id as string}>
 						<Text>{formatNameToTitle(ex.name)} - {ex.weight} kg</Text>
-						{ex.sets.map((set) => {
-							return (
-								<View key={set.id}>
+						<View style={style.row}>
+							{ex.sets.map((set) => {
+								return (
 									<RepCounter
+										key={set.id}
 										reps={ex.reps}
 										id={set.id}
 										handleSuccess={updateSetSuccess}
 									/>
-								</View>
-							)
-						})}
+								)
+							})}
+						</View>
 					</ScrollView>
 				)
 			})}
@@ -76,5 +76,12 @@ const WorkoutPage = ({ navigation }: any) => {
 		</ScrollView>
 	)
 }
+
+const style = StyleSheet.create({
+	row: {
+		flexDirection: "row",
+		flexWrap: "wrap",
+	},
+})
 
 export default WorkoutPage

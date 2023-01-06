@@ -1,6 +1,8 @@
 // React
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, Text, TextInput } from 'react-native'
+import { StyleSheet, View, Text, TextInput, Button } from 'react-native'
+// Components
+import ExerciseSettings from '../components/ExerciseSettings'
 // Contexts, Interfaces & Helpers
 import { useUserContext } from '../contexts/UserContext'
 import { IExerciseSet, IUserSchemaExcerise, IWorkoutSchema } from '../interfaces/UserSchemas'
@@ -9,15 +11,19 @@ import { formatNameToTitle } from '../helpers/TitleConverter'
 // Utils
 import { exercises as data } from '../utils/exercises'
 
+
 const EditWorkoutPage = () => {
 	const [schema, setSchema] = useState<IWorkoutSchema>([])
-	const [exercises, setExercises] = useState<IExerciseList>([])
+	const [exerciseList, setExercisesList] = useState<IExerciseList>([])
 	const [filter, setFilter] = useState({})
 
-	const [exercise, setExercise] = useState('')
-	const [weight, setWeight] = useState('')
-	const [sets, setSets] = useState('')
-	const [reps, setReps] = useState('')
+	const [visible, setVisible] = useState(false)
+
+	const [exercises, setExercises] = useState([])
+
+	// const [weight, setWeight] = useState(0)
+	// const [sets, setSets] = useState('')
+	// const [reps, setReps] = useState('')
 
 	const {
 		schemaA, setSchemaA,
@@ -25,58 +31,63 @@ const EditWorkoutPage = () => {
 		schemaC, setSchemaC,
 	} = useUserContext()
 
-	// funktion för att konvertera weight, sets och reps till nummer.
+	const stringToNumber = (state: string, setStateArg: any): void => {
+		setStateArg(Number(state))
+	}
+
+	const handleSaveSchema = () => {
+		// stringToNumber(weight, setWeight)
+		// stringToNumber(sets, setSets)
+		// stringToNumber(reps, setReps)
+
+
+	}
+
+	const addExercise = () => {
+		setVisible(true)
+		// 1. Gör en overlay med lista där användaren får välja en övning
+		// 2. Lägg till övningen under de redan existerande, men den valda övningen som titel.
+		setVisible(false)
+	}
+
+	const delExercise = () => {
+		// Ta bort en övning
+	}
+
 	// funktion för att skapa antalet object med ID och success som sets är.
 
 	useEffect(() => {
 		setSchema(schemaA)
-		setExercises(data)
+		setExercisesList(data)
 	}, [])
 
 	return (
-		<View style={styles.container}>
+		<View>
 			<Text>Edit Workout Page</Text>
 
-			<View>
-				{/* Searchbar för exercise */}
+			{schema.map(ex => {
+				return (
+					<View key={ex.id}>
+						<Text>{formatNameToTitle(ex.name)}</Text>
 
+						<ExerciseSettings
+							propId={ex.id}
+							propWeight={ex.weight}
+							propSets={Number(ex.sets.length)}
+							propReps={ex.reps}
+						/>
+					</View>
+				)
+			})}
 
-				{/* Weight input, number */}
-				<View>
-					<Text>Weight</Text>
-					<TextInput
-						style={styles.input}
-						keyboardType='numeric'
-						onChangeText={num => setWeight(num)}
-						value={weight}
-						maxLength={3}
-					/>
-				</View>
-
-				{/* Sets input, number.
-				När sparas så skapas ett object med id: string och success: boolean} */}
-				<View>
-					<Text>Sets</Text>
-					<TextInput
-						style={styles.input}
-						keyboardType='numeric'
-						onChangeText={num => setSets(num)}
-						value={sets}
-					/>
-				</View>
-
-				{/* Reps input, Number */}
-				<View>
-					<Text>Reps</Text>
-					<TextInput
-						style={styles.input}
-						keyboardType='numeric'
-						onChangeText={num => setReps(num)}
-						value={reps}
-					/>
-				</View>
-			</View>
-
+			<Button
+				onPress={addExercise}
+				title="Add exercise"
+			/>
+			<Button
+				onPress={handleSaveSchema}
+				title="Save schema"
+			/>
 		</View>
 	)
 }
