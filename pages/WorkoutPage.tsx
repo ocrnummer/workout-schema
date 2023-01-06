@@ -5,11 +5,11 @@ import { View, Text, Button, ScrollView } from 'react-native'
 import RepCounter from '../components/RepCounter'
 // Contexts, Interfaces & Helpers
 import { useUserContext } from '../contexts/UserContext'
-import { ExerciseSet, UserExcerise, WorkoutSchema } from '../interfaces/UserSchemas'
+import { IExerciseSet, IUserSchemaExcerise, IWorkoutSchema } from '../interfaces/UserSchemas'
 import { formatNameToTitle } from '../helpers/TitleConverter'
 
 const WorkoutPage = ({ navigation }: any) => {
-	const [schema, setSchema] = useState<WorkoutSchema>([])
+	const [schema, setSchema] = useState<IWorkoutSchema>([])
 	const {
 		schemaA, setSchemaA,
 		schemaB, setSchemaB,
@@ -18,7 +18,7 @@ const WorkoutPage = ({ navigation }: any) => {
 
 	const handleFinishWorkout = (): void => {
 		schema.forEach((ex): void => {
-			const success = checkIfWorkoutSuccess(ex as UserExcerise)
+			const success = checkIfWorkoutSuccess(ex as IUserSchemaExcerise)
 			if (success) {
 				ex.weight += 2.5
 				ex.sets.forEach((set) => set.success = false)
@@ -28,18 +28,18 @@ const WorkoutPage = ({ navigation }: any) => {
 		navigation.navigate('Dashboard')
 	}
 
-	const checkIfWorkoutSuccess = (ex: UserExcerise) => {
+	const checkIfWorkoutSuccess = (ex: IUserSchemaExcerise) => {
 		const arr: boolean[] = []
 		ex.sets.forEach((set): void => {
 			arr.push(set.success as boolean)
 		})
-		const isEveryItemIstrue = (arr: boolean[]): boolean => arr.every(boolean => boolean === true)
-		return isEveryItemIstrue(arr)
+		const isEveryItemTrue = (arr: boolean[]): boolean => arr.every(boolean => boolean === true)
+		return isEveryItemTrue(arr)
 	}
 
 	const updateSetSuccess = (e: [string, boolean]): void => {
 		(schema.find(ex => ex.id === e[0].slice(0, 3)) as any)
-			.sets.find((set: ExerciseSet) => set.id === e[0])
+			.sets.find((set: IExerciseSet) => set.id === e[0])
 			.success = e[1]
 	}
 

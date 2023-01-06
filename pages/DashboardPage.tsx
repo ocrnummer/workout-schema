@@ -13,6 +13,12 @@ const DashboardPage = ({ navigation }: any) => {
 					navigation.navigate('Workout')
 				}
 			/>
+			<Button
+				title="Edit Workout"
+				onPress={() =>
+					navigation.navigate('EditWorkout')
+				}
+			/>
 		</View>
 	)
 }

@@ -1,14 +1,14 @@
-export interface ExerciseSet {
+export interface IExerciseSet {
 	id: string;
 	success: boolean;
 }
 
-export interface UserExcerise {
+export interface IUserSchemaExcerise {
 	id: string;
 	name: string;
 	weight: number;
 	reps: number;
-	sets: Array<ExerciseSet>;
+	sets: Array<IExerciseSet>;
 }
 
-export interface WorkoutSchema extends Array<UserExcerise> { }
+export interface IWorkoutSchema extends Array<IUserSchemaExcerise> { }
