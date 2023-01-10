@@ -22,45 +22,45 @@ const ExerciseSettings = ({ propId, propWeight, propSets, propReps, onStatsChang
 	}, [onStatsChange])
 
 	return (
-		<View style={[style.row, style.spaceBetween]}>
+		<View style={[styles.row, styles.spaceBetween]}>
 			<View>
 				<Text>Weight (kg)</Text>
-				<View style={[style.row, style.spaceBetween]}>
+				<View style={[styles.row, styles.spaceBetween]}>
 					<TouchableOpacity
 						onPress={() => setWeight(weight => weight - 2.5)}
 						disabled={weight <= 0 ? true : false}
 					>
-						<View style={style.counter}>
-							<Text style={style.text}>-2.5</Text>
+						<View style={styles.counter}>
+							<Text style={styles.text}>-2.5</Text>
 						</View>
 					</TouchableOpacity>
 					<Text>{weight}</Text>
 					<TouchableOpacity
 						onPress={() => setWeight(weight => weight + 2.5)}
 					>
-						<View style={style.counter}>
-							<Text style={style.text}>+2.5</Text>
+						<View style={styles.counter}>
+							<Text style={styles.text}>+2.5</Text>
 						</View>
 					</TouchableOpacity>
 				</View>
 			</View>
 			<View>
 				<Text>Sets</Text>
-				<View style={[style.row, style.spaceBetween]}>
+				<View style={[styles.row, styles.spaceBetween]}>
 					<TouchableOpacity
 						onPress={() => setSets(sets => sets - 1)}
 						disabled={sets <= 0 ? true : false}
 					>
-						<View style={style.counter}>
-							<Text style={style.text}>-1</Text>
+						<View style={styles.counter}>
+							<Text style={styles.text}>-1</Text>
 						</View>
 					</TouchableOpacity>
 					<Text>{sets}</Text>
 					<TouchableOpacity
 						onPress={() => setSets(sets => sets + 1)}
 					>
-						<View style={style.counter}>
-							<Text style={style.text}>+1</Text>
+						<View style={styles.counter}>
+							<Text style={styles.text}>+1</Text>
 						</View>
 					</TouchableOpacity>
 				</View>
@@ -68,21 +68,21 @@ const ExerciseSettings = ({ propId, propWeight, propSets, propReps, onStatsChang
 
 			<View>
 				<Text>Reps</Text>
-				<View style={[style.row, style.spaceBetween]}>
+				<View style={[styles.row, styles.spaceBetween]}>
 					<TouchableOpacity
 						onPress={() => setReps(reps => reps - 1)}
 						disabled={reps <= 0 ? true : false}
 					>
-						<View style={style.counter}>
-							<Text style={style.text}>-1</Text>
+						<View style={styles.counter}>
+							<Text style={styles.text}>-1</Text>
 						</View>
 					</TouchableOpacity>
 					<Text>{reps}</Text>
 					<TouchableOpacity
 						onPress={() => setReps(reps => reps + 1)}
 					>
-						<View style={style.counter}>
-							<Text style={style.text}>+1</Text>
+						<View style={styles.counter}>
+							<Text style={styles.text}>+1</Text>
 						</View>
 					</TouchableOpacity>
 				</View>
@@ -91,7 +91,7 @@ const ExerciseSettings = ({ propId, propWeight, propSets, propReps, onStatsChang
 	)
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: '#fff',

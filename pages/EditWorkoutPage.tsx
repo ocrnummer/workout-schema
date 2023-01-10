@@ -23,7 +23,7 @@ import { exercises as data } from '../utils/exercises'
 
 
 const EditWorkoutPage = ({ navigation }: any) => {
-	const [schema, setSchema] = useState<IWorkoutSchema>([])
+	const [schema, setSchema] = useState<IUserSchemaExcerise[]>([])
 	const [exerciseList, setExercisesList] = useState<IExerciseList>([])
 	const [filteredList, setFilteredList] = useState<IExerciseList>([])
 	const [search, setSearch] = useState('');
@@ -113,7 +113,7 @@ const EditWorkoutPage = ({ navigation }: any) => {
 	}
 
 	useEffect(() => {
-		setSchema(schemaA)
+		setSchema(schemaA.schema)
 		setExercisesList(data)
 		setFilteredList(data)
 	}, [])
@@ -121,17 +121,17 @@ const EditWorkoutPage = ({ navigation }: any) => {
 	return (
 		<View>
 			{visible && (
-				<ScrollView style={style.modal}>
+				<ScrollView style={styles.modal}>
 					<View>
 						<TextInput
-							style={style.input}
+							style={styles.input}
 							onChangeText={(text) => handleSearchFilter(text)}
 							value={search}
 							placeholder="Search exercise"
 						/>
 
 						{/* ÅTERKOMM HIT FÖR ATT GÖRA FILTRERINGSKNAPPAR
-						
+
 						<View>
 							<TouchableHighlight
 								style={style.delButton}
@@ -156,7 +156,7 @@ const EditWorkoutPage = ({ navigation }: any) => {
 						return (
 							<Text
 								key={item.id}
-								style={style.item}
+								style={styles.item}
 								onPress={() => handleAddExercise(item)}
 							>
 								{formatNameToTitle(item.name)}
@@ -172,13 +172,13 @@ const EditWorkoutPage = ({ navigation }: any) => {
 				{schema.map(ex => {
 					return (
 						<View key={ex.id}>
-							<View style={[style.row, style.spaceBetween]}>
+							<View style={[styles.row, styles.spaceBetween]}>
 								<Text>{formatNameToTitle(ex.name)}</Text>
 								<TouchableHighlight
-									style={style.delButton}
+									style={styles.delButton}
 									onPress={() => deleteExercise(ex.id)}
 								>
-									<Text style={style.delButtonText}>X</Text>
+									<Text style={styles.delButtonText}>X</Text>
 								</TouchableHighlight>
 
 							</View>
@@ -205,7 +205,7 @@ const EditWorkoutPage = ({ navigation }: any) => {
 	)
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: '#fff',

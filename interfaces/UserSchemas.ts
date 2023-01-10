@@ -11,4 +11,7 @@ export interface IUserSchemaExcerise {
 	sets: Array<IExerciseSet>;
 }
 
-export interface IWorkoutSchema extends Array<IUserSchemaExcerise> { }
+export interface IWorkoutSchema {
+	id: string;
+	schema: Array<IUserSchemaExcerise>;
+}
