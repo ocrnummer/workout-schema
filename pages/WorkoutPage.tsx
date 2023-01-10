@@ -37,10 +37,17 @@ const WorkoutPage = ({ navigation }: any) => {
 		return isEveryItemTrue(arr)
 	}
 
-	const updateSetSuccess = (e: [string, boolean]): void => {
+	const updateSetSuccess = (e: [string, string, boolean]): void => {
+		const array: IWorkoutSchema = [...schema]
+		const exerciseIndex = array.map((ex) => ex.id).indexOf(e[0])
+		const setIndex = array[exerciseIndex].sets.map((set) => set.id).indexOf(e[1])
+		array[exerciseIndex].sets[setIndex].success = e[2]
+		setSchema(array)
+		/* 
 		(schema.find(ex => ex.id === e[0].slice(0, 3)) as any)
 			.sets.find((set: IExerciseSet) => set.id === e[0])
 			.success = e[1]
+		*/
 	}
 
 	useEffect(() => {
@@ -60,7 +67,8 @@ const WorkoutPage = ({ navigation }: any) => {
 									<RepCounter
 										key={set.id}
 										reps={ex.reps}
-										id={set.id}
+										setId={set.id}
+										exId={ex.id}
 										handleSuccess={updateSetSuccess}
 									/>
 								)

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 
-const RepCounter = ({ reps, id, handleSuccess }: any) => {
+const RepCounter = ({ reps, setId, exId, handleSuccess }: any) => {
 	const [counter, setCounter] = useState(reps)
 	const [active, setActive] = useState(false)
 
@@ -18,9 +18,9 @@ const RepCounter = ({ reps, id, handleSuccess }: any) => {
 		}
 
 		if (!active && counter === reps) {
-			handleSuccess([id, true])
+			handleSuccess([exId, setId, true])
 		} else {
-			handleSuccess([id, false])
+			handleSuccess([exId, setId, false])
 		}
 	}
 

@@ -1,38 +1,34 @@
-// React
+/* React & Dependencies */
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, ScrollView, Text, TextInput, Button, FlatList } from 'react-native'
-// Components
+import {
+	StyleSheet,
+	View,
+	ScrollView,
+	Text,
+	TextInput,
+	Button,
+	TouchableHighlight,
+} from 'react-native'
+import 'react-native-get-random-values' // <- Needed for uuid to work with react native
+import { v4 as uuid } from 'uuid'
+/* Components */
 import ExerciseSettings from '../components/ExerciseSettings'
-// Contexts, Interfaces & Helpers
+/* Contexts, Interfaces & Helpers */
 import { useUserContext } from '../contexts/UserContext'
 import { IExerciseSet, IUserSchemaExcerise, IWorkoutSchema } from '../interfaces/UserSchemas'
 import { IExercise, IExerciseList } from '../interfaces/Exercises'
 import { formatNameToTitle } from '../helpers/TitleConverter'
-// Utils
+/* Utils */
 import { exercises as data } from '../utils/exercises'
 
 
-const EditWorkoutPage = () => {
+const EditWorkoutPage = ({ navigation }: any) => {
 	const [schema, setSchema] = useState<IWorkoutSchema>([])
 	const [exerciseList, setExercisesList] = useState<IExerciseList>([])
 	const [filteredList, setFilteredList] = useState<IExerciseList>([])
 	const [search, setSearch] = useState('');
-
 	const [visible, setVisible] = useState(false)
-
-
-	const [newExercise, setNewExercise] = useState('')
-
-
-	// const [exercises, setExercises] = useState([])
-
-	// const [filteredDataSource, setFilteredDataSource] = useState([]);
-	// const [masterDataSource, setMasterDataSource] = useState([]);
-
-
-	// const [weight, setWeight] = useState(0)
-	// const [sets, setSets] = useState('')
-	// const [reps, setReps] = useState('')
+	const [filter, setFilter] = useState({})
 
 	const {
 		schemaA, setSchemaA,
@@ -57,57 +53,64 @@ const EditWorkoutPage = () => {
 		}
 	}
 
-	const listItem = ({ item }: any) => {
-		return (
-			<Text
-				style={style.item}
-				onPress={() => setNewExercise(item)}>
-				{formatNameToTitle(item.name)}
-			</Text>
-		)
-	}
-
-	const listItemSeparator = () => {
-		return (
-			<View
-				style={style.listSeparator}
-			/>
-		)
-	}
-
-	// const selectItem = (item) => {
-	// 	// alert('Id : ' + item.id + ' Title : ' + item.title);
-	// };
-
-
-
+	/* 
+	Kanske använd vvvv
 
 	const stringToNumber = (state: string, setStateArg: any): void => {
 		setStateArg(Number(state))
 	}
+	*/
 
 	const handleSaveSchema = () => {
-		// stringToNumber(weight, setWeight)
-		// stringToNumber(sets, setSets)
-		// stringToNumber(reps, setReps)
+		// Här posta till användarens schema firebase
+		// setSchemaA/B/C
 
-
+		setSchemaA(schema)
+		navigation.navigate('Dashboard')
 	}
 
-	const handleAddExercise = () => {
-		// 1. Gör en overlay med lista där användaren får välja en övning
-		// 2. Lägg till övningen under de redan existerande, men den valda övningen som titel.
-
-
-
+	const handleAddExercise = (e: IExercise) => {
+		setSchema([...schema, {
+			id: uuid().toString(),
+			name: e.name.toString(),
+			weight: 0,
+			reps: 0,
+			sets: [],
+		}])
 		setVisible(!visible)
 	}
 
-	const delExercise = () => {
-		// Ta bort en övning
+	const deleteExercise = (id: string): void => {
+		const array = [...schema]
+		const index = array.map((ex) => ex.id).indexOf(id)
+		array.splice(index, 1)
+		setSchema(array)
 	}
 
-	// funktion för att skapa antalet object med ID och success som sets är.
+	const handleStatsChange = (e: any): void => {
+		const array = [...schema]
+		const index = array.map((ex) => ex.id).indexOf(e.propId)
+
+		if (array[index].weight !== e.weight) {
+			array[index].weight = e.weight
+		}
+		if (array[index].reps !== e.reps) {
+			array[index].reps = e.reps
+		}
+		if (array[index].sets.length <= e.sets) {
+			for (let i = 0; i < e.sets; i++) {
+				array[index].sets[i] = {
+					id: uuid().toString(),
+					success: false,
+				}
+			}
+		} else if (array[index].sets.length >= e.sets) {
+			for (let i = array[index].sets.length; i > e.sets; i--) {
+				array[index].sets.pop()
+			}
+		}
+		setSchema(array)
+	}
 
 	useEffect(() => {
 		setSchema(schemaA)
@@ -118,9 +121,8 @@ const EditWorkoutPage = () => {
 	return (
 		<View>
 			{visible && (
-				<ScrollView>
-					<View style={style.modal}>
-
+				<ScrollView style={style.modal}>
+					<View>
 						<TextInput
 							style={style.input}
 							onChangeText={(text) => handleSearchFilter(text)}
@@ -128,19 +130,39 @@ const EditWorkoutPage = () => {
 							placeholder="Search exercise"
 						/>
 
-						<FlatList
-							data={filteredList}
-							keyExtractor={(item, index) => index.toString()}
-							ItemSeparatorComponent={listItemSeparator}
-							renderItem={listItem}
-						/>
+						{/* ÅTERKOMM HIT FÖR ATT GÖRA FILTRERINGSKNAPPAR
+						
+						<View>
+							<TouchableHighlight
+								style={style.delButton}
+								onPress={() => setFilter()}
+							>
+								<Text>arm</Text>
+							</TouchableHighlight>
+ 
+							<TouchableHighlight
+								style={style.delButton}
+								onPress={() => setFilter()}
+							>
+								<Text>dumbbell</Text>
+							</TouchableHighlight>
+						</View> 
+						*/}
 
-						<Button
-							onPress={handleAddExercise}
-							title="Add exercise"
-						/>
+
 					</View>
-					<View style={style.overlay}></View>
+
+					{filteredList && filteredList.map(item => {
+						return (
+							<Text
+								key={item.id}
+								style={style.item}
+								onPress={() => handleAddExercise(item)}
+							>
+								{formatNameToTitle(item.name)}
+							</Text>
+						)
+					})}
 				</ScrollView>
 			)}
 
@@ -150,18 +172,26 @@ const EditWorkoutPage = () => {
 				{schema.map(ex => {
 					return (
 						<View key={ex.id}>
-							<Text>{formatNameToTitle(ex.name)}</Text>
+							<View style={[style.row, style.spaceBetween]}>
+								<Text>{formatNameToTitle(ex.name)}</Text>
+								<TouchableHighlight
+									style={style.delButton}
+									onPress={() => deleteExercise(ex.id)}
+								>
+									<Text style={style.delButtonText}>X</Text>
+								</TouchableHighlight>
 
+							</View>
 							<ExerciseSettings
 								propId={ex.id}
 								propWeight={ex.weight}
 								propSets={Number(ex.sets.length)}
 								propReps={ex.reps}
+								onStatsChange={handleStatsChange}
 							/>
 						</View>
 					)
 				})}
-
 				<Button
 					onPress={() => setVisible(!visible)}
 					title="Add exercise"
@@ -186,6 +216,27 @@ const style = StyleSheet.create({
 		width: 200,
 		borderWidth: 2,
 	},
+	row: {
+		flexDirection: "row",
+		flexWrap: "wrap",
+	},
+	spaceBetween: {
+		alignItems: 'center',
+		justifyContent: 'space-between',
+	},
+	delButton: {
+		color: 'white',
+		fontSize: 20,
+		width: 30,
+		height: 30,
+		padding: 5,
+		borderRadius: 10,
+		backgroundColor: 'red',
+	},
+	delButtonText: {
+		color: 'white',
+		fontSize: 20,
+	},
 	item: {
 		padding: 5,
 	},
@@ -194,17 +245,10 @@ const style = StyleSheet.create({
 		width: '100%',
 		backgroundColor: '#C8C8C8',
 	},
-	overlay: {
-		width: '100%',
-		height: '100%',
-		backgroundColor: 'rgba(0, 0, 0, 0.3)',
-		opacity: 0.4,
-	},
 	modal: {
-		// width: 50,
-		// height: 100,
-		zIndex: 3,
-		elevation: 3,
+		height: '100%',
+		width: '100%',
+		backgroundColor: 'white',
 	},
 })
 
