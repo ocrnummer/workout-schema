@@ -22,7 +22,7 @@ import { formatNameToTitle } from '../helpers/TitleConverter'
 import { exercises as data } from '../utils/exercises'
 
 
-const EditWorkoutPage = ({ navigation }: any) => {
+const EditWorkoutPage = ({ navigation, route: { params } }: any) => {
 	const [schema, setSchema] = useState<IUserSchemaExcerise[]>([])
 	const [exerciseList, setExercisesList] = useState<IExerciseList>([])
 	const [filteredList, setFilteredList] = useState<IExerciseList>([])
@@ -62,11 +62,12 @@ const EditWorkoutPage = ({ navigation }: any) => {
 	*/
 
 	const handleSaveSchema = () => {
-		// Här posta till användarens schema firebase
-		// setSchemaA/B/C
+		// Här kallas funktion i middleware som POST till användarens schema firebase
 
-		setSchemaA(schema)
-		navigation.navigate('Dashboard')
+		params.schemaId === 'a' ? setSchemaA({ id: params.schemaId, schema: schema }) : null
+		params.schemaId === 'b' ? setSchemaB({ id: params.schemaId, schema: schema }) : null
+		params.schemaId === 'c' ? setSchemaC({ id: params.schemaId, schema: schema }) : null
+		navigation.navigate('Workout', { schemaId: params.schemaId })
 	}
 
 	const handleAddExercise = (e: IExercise) => {
@@ -91,29 +92,33 @@ const EditWorkoutPage = ({ navigation }: any) => {
 		const array = [...schema]
 		const index = array.map((ex) => ex.id).indexOf(e.propId)
 
-		if (array[index].weight !== e.weight) {
-			array[index].weight = e.weight
-		}
-		if (array[index].reps !== e.reps) {
-			array[index].reps = e.reps
-		}
-		if (array[index].sets.length <= e.sets) {
-			for (let i = 0; i < e.sets; i++) {
+		array[index].weight !== e.weight ? array[index].weight = e.weight : null
+		array[index].reps !== e.reps ? array[index].reps = e.reps : null
+
+		updateNumberOfSetsToObjects(array, index, e.sets)
+		setSchema(array)
+	}
+
+	const updateNumberOfSetsToObjects = (array: IUserSchemaExcerise[], index: number, sets: number) => {
+		if (array[index].sets.length <= sets) {
+			for (let i = 0; i < sets; i++) {
 				array[index].sets[i] = {
 					id: uuid().toString(),
 					success: false,
 				}
 			}
-		} else if (array[index].sets.length >= e.sets) {
-			for (let i = array[index].sets.length; i > e.sets; i--) {
+		} else if (array[index].sets.length >= sets) {
+			for (let i = array[index].sets.length; i > sets; i--) {
 				array[index].sets.pop()
 			}
 		}
-		setSchema(array)
+		return array
 	}
 
 	useEffect(() => {
-		setSchema(schemaA.schema)
+		params.schemaId === 'a' ? setSchema(schemaA.schema) : null
+		params.schemaId === 'b' ? setSchema(schemaB.schema) : null
+		params.schemaId === 'c' ? setSchema(schemaC.schema) : null
 		setExercisesList(data)
 		setFilteredList(data)
 	}, [])
@@ -167,7 +172,7 @@ const EditWorkoutPage = ({ navigation }: any) => {
 			)}
 
 			<View>
-				<Text>Edit Workout Page</Text>
+				<Text>Edit Workout {params.schemaId.toUpperCase()}</Text>
 
 				{schema.map(ex => {
 					return (

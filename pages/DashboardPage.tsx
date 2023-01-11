@@ -8,14 +8,9 @@ import WorkoutCard from '../components/WorkoutCard'
 const DashboardPage = ({ navigation }: any) => {
 	const [userSchema, setUserSchemas] = useState<any>([])
 
-	const {
-		schemaA, setSchemaA,
-		schemaB, setSchemaB,
-		schemaC, setSchemaC,
-	} = useUserContext()
+	const { schemaA, schemaB, schemaC, } = useUserContext()
 
 	const handleCardPress = (e: any) => {
-		console.log("handleCardPress: ", e)
 		navigation.navigate('Workout', { schemaId: e })
 	}
 

@@ -1,6 +1,6 @@
 // React
 import { useState, useEffect } from 'react'
-import { StyleSheet, View, Text, Button, ScrollView } from 'react-native'
+import { StyleSheet, View, Text, Button, ScrollView, TouchableHighlight } from 'react-native'
 
 // Components
 import RepCounter from '../components/RepCounter'
@@ -26,28 +26,20 @@ const WorkoutPage = ({ navigation, route: { params } }: any) => {
 				const index = array.map((ex) => ex.id).indexOf(ex.id)
 				array[index].weight += 2.5
 				array[index].sets.forEach((set) => set.success = false)
-
-
-				// array[index].sets.map((set) => {
-				// 	ex.weight += 2.5
-				// 	ex.sets.forEach((set) => set.success = false)
-				// })
-
-				// // array[exerciseIndex].sets[setIndex].success = e[2]
-				// // setSchema(array)
-
-				// ex.weight += 2.5
-				// ex.sets.forEach((set) => set.success = false)
-
-
-				params.schemaId === 'a' ? setSchemaA(array) : ''
-				params.schemaId === 'b' ? setSchemaB(array) : ''
-				params.schemaId === 'c' ? setSchemaC(array) : ''
-
-				// setSchemaA(schema)
+				updateWorkoutSchema(array)
 			}
 		})
 		navigation.navigate('Dashboard')
+	}
+
+	const updateWorkoutSchema = (array: IUserSchemaExcerise[]): void => {
+		params.schemaId === 'a' ? setSchemaA({ id: params.schemaId, schema: array }) : null
+		params.schemaId === 'b' ? setSchemaB({ id: params.schemaId, schema: array }) : null
+		params.schemaId === 'c' ? setSchemaC({ id: params.schemaId, schema: array }) : null
+	}
+
+	const editWorkout = () => {
+		navigation.navigate('EditWorkout', { schemaId: params.schemaId })
 	}
 
 	const checkIfWorkoutSuccess = (ex: IUserSchemaExcerise) => {
@@ -65,31 +57,23 @@ const WorkoutPage = ({ navigation, route: { params } }: any) => {
 		const setIndex = array[exerciseIndex].sets.map((set) => set.id).indexOf(e[1])
 		array[exerciseIndex].sets[setIndex].success = e[2]
 		setSchema(array)
-		/* 
-		(schema.find(ex => ex.id === e[0].slice(0, 3)) as any)
-			.sets.find((set: IExerciseSet) => set.id === e[0])
-			.success = e[1]
-		*/
 	}
 
 	useEffect(() => {
-
-		if (params.schemaId === 'a') {
-			setSchema(schemaA.schema)
-		}
-		if (params.schemaId === 'b') {
-			setSchema(schemaB.schema)
-		}
-		if (params.schemaId === 'c') {
-			setSchema(schemaC.schema)
-		}
-
-		console.log('workoutpage: ', schema)
+		params.schemaId === 'a' ? setSchema(schemaA.schema) : null
+		params.schemaId === 'b' ? setSchema(schemaB.schema) : null
+		params.schemaId === 'c' ? setSchema(schemaC.schema) : null
 	}, [])
 
 	return (
 		<ScrollView>
-			<Text>Workout</Text>
+			<View style={[styles.row, styles.spaceBetween]}>
+				<Text>Workout {params.schemaId.toUpperCase()}</Text>
+				<TouchableHighlight onPress={() => editWorkout()}>
+					<Text>Edit</Text>
+				</TouchableHighlight>
+			</View>
+
 			{schema && schema.map(ex => {
 				return (
 					<ScrollView key={ex.id as string}>
@@ -122,6 +106,9 @@ const styles = StyleSheet.create({
 	row: {
 		flexDirection: "row",
 		flexWrap: "wrap",
+	},
+	spaceBetween: {
+		justifyContent: 'space-between',
 	},
 })
 
