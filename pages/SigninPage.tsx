@@ -12,10 +12,10 @@ const SigninPage = ({ navigation }: any) => {
 
 	// }
 
-	const handleLogin = async () => {
+	const handleLogin = () => {
 		if (email !== '' && password !== '') {
 			try {
-				await login(email, password)
+				login(email, password)
 				navigation.navigate('Dashboard')
 			} catch (error) {
 				console.log(error)

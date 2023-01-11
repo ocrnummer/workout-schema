@@ -1,7 +1,12 @@
 import React, { useState } from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native';
 
+import { useAuthContext } from "../contexts/AuthContext"
+
+
+
 const HomePage = ({ navigation }: any) => {
+	const { logout } = useAuthContext()
 
 	return (
 		<View style={styles.container}>
@@ -25,6 +30,10 @@ const HomePage = ({ navigation }: any) => {
 				onPress={() =>
 					navigation.navigate('Dashboard')
 				}
+			/>
+			<Button
+				title="Logout"
+				onPress={logout}
 			/>
 		</View>
 	)

@@ -1,11 +1,52 @@
 import React, { useState } from 'react'
-import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
+import { Button, StyleSheet, Text, View, TextInput } from 'react-native'
+import { collection, addDoc } from 'firebase/firestore'
+import { db } from '../firebase'
 
+import { useAuthContext } from "../contexts/AuthContext"
 
 const RegisterPage = ({ navigation }: any) => {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [repeatPassword, setRepeatPassword] = useState('')
+
+	const { register, reloadUser, currentUser } = useAuthContext()
+
+	const handleRegister = () => {
+		if (password === repeatPassword) {
+			try {
+				register(email, password)
+				reloadUser()
+
+				addDoc(collection(db, 'users'), {
+					id: currentUser.uid,
+					next_workout: 'a',
+					schemas: [
+						{
+							id: 'a',
+							active: true,
+							schema: []
+						},
+						{
+							id: 'b',
+							active: true,
+							schema: []
+						},
+						{
+							id: 'c',
+							active: true,
+							schema: []
+						},
+					]
+				})
+
+				navigation.navigate('Dashboard')
+			} catch (error) {
+				console.log(error)
+			}
+		}
+	}
+
 
 	return (
 		<View style={styles.container}>
@@ -43,9 +84,7 @@ const RegisterPage = ({ navigation }: any) => {
 
 			<Button
 				title="Register"
-				onPress={() =>
-					navigation.navigate('Dashboard')
-				}
+				onPress={handleRegister}
 			/>
 
 		</View>
